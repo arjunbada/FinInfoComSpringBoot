@@ -1,29 +1,24 @@
 package com.Fininfocom.Task.controllers
 
-import com.Fininfocom.Task.responseHandling.models.Response
 import com.Fininfocom.Task.models.User
-import com.Fininfocom.Task.services.UserServices
+import com.Fininfocom.Task.responseHandling.models.Response
+import com.Fininfocom.Task.services.UserService
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("api/users")
-class UserController(val userServices: UserServices) {
+class UserController(val userServices: UserService) {
 
     @GetMapping
     fun getAllUsers(): List<User> = userServices.getAllUsers()
 
-    @GetMapping("/{id}")
-    fun userById(@PathVariable id: Long): User = userServices.userById(id)
+    @GetMapping("/id/{id}")
+    fun getUserById(@PathVariable id: Long): User = userServices.getUserById(id)
+
+    @GetMapping("/salary/{salary}")
+    fun getUsersBySalary(@PathVariable salary: Double): List<User> = userServices.getUsersBySalary(salary)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

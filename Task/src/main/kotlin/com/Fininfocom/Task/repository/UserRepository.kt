@@ -1,17 +1,14 @@
 package com.Fininfocom.Task.repository
 
-import com.Fininfocom.Task.responseHandling.models.Response
 import com.Fininfocom.Task.models.User
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 
-interface UserRepository  {
+@Repository
+interface UserRepository : JpaRepository<User, Long> {
 
-    fun getAllUsers():List<User>
+    @Query("SELECT u FROM User u WHERE u.salary > :salary ORDER BY u.id ASC")
+    fun getUsersBySalary(salary: Double): List<User>
 
-    fun userById(empId:Long):User
-
-    fun saveUser(user: User): Response<User>
-
-    fun updateUser(empId:Long, user: User): Response<User>
-
-    fun deleteUser(empId: Long): Response<User>
 }
